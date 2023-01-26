@@ -6,57 +6,79 @@ services:
      dockerfile: Dockerfile
     restart: always
     ports:
-      - "8094:80"
-    volumes:
-    - my-nfs-volume:/nfs
+      - "8090:80"
   Admin_mode_1:
     image: nginx
     volumes:
-      - my-nfs-volume:/nfs
+      - web_backend1:/usr/share/nginx/html
     restart: always
     ports:
-      - "8095:80"
+      - "8094:80"
   Admin_mode_2:
     image: nginx
     volumes:
-      - my-nfs-volume:/nfs
+        - web_backend2:/usr/share/nginx/html
     restart: always
     ports:
-      - "8096:80"
-  Admin_mode_3:
-    image: nginx
-    volumes:
-      - my-nfs-volume:/nfs
-    restart: always
-    ports:
-      - "8096:80"
+      - "8095:80"
   webA:
     image: nginx 
     restart: always
     ports:
       - "8091:80"
     volumes:
-    - my-nfs-volume:/nfs
+        - web_client1:/usr/share/nginx/html
   webB:
     image: nginx
     restart: always
     ports:
       - "8092:80"
     volumes:
-    - my-nfs-volume:/nfs
+        - web_client2:/usr/share/nginx/html
   webC:
     image: nginx
     restart: always
     ports:
       - "8093:80"
     volumes:
-    - my-nfs-volume:/nfs
+        - web_client3:/usr/share/nginx/html
 
 
+#volumes:  
+ #my-nfs-volume:
+  # name: my-nfs-volume
+   #driver_opts:
+    #  type: "nfs"
+     # o: "username=mis,password=M@gic2023,addr=192.168.56.11,soft,ro"
+      #device: ":/home/sharedocker"     
 volumes:  
- my-nfs-volume:
-   name: my-nfs-volume
+ web_backend1:
+   name: web_backend1
+   driver_opts:
+      type: "nfs"
+      o: "username=mis,password=M@gic2023,addr=192.168.56.11,soft,ro"
+      device: ":/home/sharedocker" 
+ web_backend2:
+   name: web_backend2
    driver_opts:
       type: "nfs"
       o: "username=mis,password=M@gic2023,addr=192.168.56.11,soft,ro"
       device: ":/home/sharedocker"
+ web_client1:
+   name: web_client1
+   driver_opts:
+      type: "nfs"
+      o: "username=mis,password=M@gic2023,addr=192.168.56.11,soft,ro"
+      device: ":/home/sharedocker"
+ web_client2:
+   name: web_client2
+   driver_opts:
+      type: "nfs"
+      o: "username=mis,password=M@gic2023,addr=192.168.56.11,soft,ro"
+      device: ":/home/sharedocker"
+ web_client3:
+   name: web_client3
+   driver_opts:
+      type: "nfs"
+      o: "username=mis,password=M@gic2023,addr=192.168.56.11,soft,ro"
+      device: ":/home/sharedocker"     
